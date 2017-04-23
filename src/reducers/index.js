@@ -1,8 +1,8 @@
-import { routerReducer } from 'react-native-redux-router'
-import { combineReducers } from 'redux'
-import privateSitesReducer from './privateSitesReducer'
+import { routerReducer } from 'react-native-redux-router';
+import { combineReducers } from 'redux';
+import userReducer from './userReducer';
 
 module.exports = combineReducers({
   routerReducer,
-  privateSites: privateSitesReducer
+  userReducer
 });

@@ -11,8 +11,10 @@ module.exports = StyleSheet.create({
     flex: 1
   },
   popupContainer: {
-    width: 600,
-    height: 400,
-    backgroundColor: 'white'
+    marginTop: 32,
+    marginBottom: 10,
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    padding: 10
   }
 });

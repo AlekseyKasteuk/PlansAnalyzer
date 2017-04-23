@@ -1,23 +1,22 @@
-import React from 'react'
-import {
-  StyleSheet,
-  View,
-  Text
-} from 'react-native'
-import { Actions } from 'react-native-redux-router'
-import Icon from 'react-native-vector-icons/MaterialIcons'
-
-import SitesView from '../components/pages/sites'
-import AddSite from '../components/pages/add-site'
+import Sites from '../components/pages/Sites';
+import AuthPage from '../components/pages/AuthPage';
+import CreateTeam from '../components/pages/CreateTeam';
+import LoadingPage from '../components/pages/LoadingPage';
 
 const routes = {
-  'sites': {
-    page: SitesView
-  },
-  'addSite': {
-    page: AddSite
-  }
-}
+    auth: {
+        page: AuthPage
+    },
+    createTeam: {
+        page: CreateTeam
+    },
+    sites: {
+        page: Sites
+    },
+    loading: {
+        page: LoadingPage
+    }
+};
 
 
 module.exports = routes;
