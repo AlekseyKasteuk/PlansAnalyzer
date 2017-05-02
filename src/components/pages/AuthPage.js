@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
 import {
     StyleSheet,
     Text,
@@ -53,7 +53,7 @@ class AuthPage extends Component {
                 }
                 <Image style={ styles.appIcon } source={ require('../../imgs/app-icon.png') }/>
                 <Text style={ styles.appName }>PLANS ANALYZER</Text>
-                <LoginBtn text="LOGIN" onPress={ () => {  } }/>
+                <LoginBtn text="LOGIN" onPress={ () => { Actions.login() } }/>
                 <LoginBtn text="CREATE TEAM" onPress={ () => { Actions.createTeam() } }/>
             </View>
         );

@@ -11,7 +11,10 @@ const requestObject = (method, url) => {
 const requests = {
     CREATE_TEAM: requestObject('POST', '/team/create'),
     TEAM_AVAILABLE: requestObject('POST', '/team/available'),
-    AUTH_CHECK: requestObject('GET', '/user/check')
+    AUTH_CHECK: requestObject('GET', '/user/check'),
+    USER_LOGIN: requestObject('POST', '/user/login'),
+    SITES_LIST: requestObject('GET', '/sites'),
+    SITE_CREATE: requestObject('POST', '/site')
 };
 
 export default (type, data) => {

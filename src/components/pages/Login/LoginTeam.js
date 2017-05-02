@@ -1,35 +1,20 @@
-import React, {Component} from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    ActivityIndicator
-} from 'react-native';
-import { Form,
-    Separator,InputField, LinkField,
-    SwitchField, PickerField,DatePickerField,TimePickerField
-} from 'react-native-form-generator';
-import { Modal, ModalContainer } from '../elements/modal';
-import FormWrapper from '../elements/FormWrapper';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import { Form, Separator, InputField } from 'react-native-form-generator';
+import { ModalContainer } from '../../elements/modal';
+import FormWrapper from '../../elements/FormWrapper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import FormHelpIcon from '../elements/FormHelpIcon';
-import requestSender from '../../util/send-request';
-import { Actions } from 'react-native-redux-router';
+import FormHelpIcon from '../../elements/FormHelpIcon';
+import requestSender from '../../../util/send-request';
+import LoginUser from './LoginUser';
 
 const styles = StyleSheet.create({
-    container: {
-        position: 'relative',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+
 });
 
 class LoginTeam extends FormWrapper {
 
-    static rightBtnClick () {
-        LoginTeam.rightBtnClickHandle();
-    }
+    static rightButtonClick () { LoginTeam.rightBtnClickHandle(); }
     static title = 'Login: Team';
     static rightButtonTitle = 'Next';
 
@@ -54,13 +39,18 @@ class LoginTeam extends FormWrapper {
             this.setState({ spinner: true });
             requestSender('TEAM_AVAILABLE', request).then((response) => {
                 console.log(response);
-                if (response.status >= 200 && response.status < 300) {
+                if (response.status === 200) {
                     this.props.navigator.push({
-
+                        component: LoginUser,
+                        title: LoginUser.title,
+                        leftButtonTitle: LoginUser.leftButtonTitle,
+                        onLeftButtonPress: LoginUser.leftButtonClick,
+                        onRightButtonPress: LoginUser.rightButtonClick,
+                        rightButtonTitle: LoginUser.rightButtonTitle,
+                        passProps: { team: response.data }
                     });
-                } else {
-                    this.setState({ spinner: false });
                 }
+                this.setState({ spinner: false });
             }).catch((err) => {
                 console.log(err);
                 this.setState({ spinner: false });
@@ -73,8 +63,12 @@ class LoginTeam extends FormWrapper {
             <ModalContainer
             >
                 {
-                    !this.state.spinner &&
-                    <ScrollView keyboardShouldPersistTaps="always" style={{paddingLeft:10,paddingRight:10}}>
+                    !this.state.spinner ?
+                    <ScrollView
+                        keyboardShouldPersistTaps="always"
+                        style={{paddingLeft:10,paddingRight:10}}
+                        automaticallyAdjustContentInsets={false}
+                    >
                         <Form
                             ref={ this.formName }
                             onFocus={this.handleFormFocus.bind(this)}
@@ -85,6 +79,7 @@ class LoginTeam extends FormWrapper {
                                 ref='name'
                                 placeholder='Name'
                                 autoCapitalize="none"
+                                value={ this.state.formData.name }
                                 iconLeft={
                                     <Icon style={{marginLeft:10, alignSelf:'center', color:'#999'}} name='people-outline' size={30} />
                                 }
@@ -94,47 +89,27 @@ class LoginTeam extends FormWrapper {
                                         true;
                                 }}
                                 iconRight={
-                                    <FormHelpIcon text={ this.validation.bind(this, this.formName)('teamName') } size={40} />
+                                    <FormHelpIcon text={ this.validation.bind(this, this.formName)('name') } size={40} />
                                 }
                             />
                         </Form>
-                    </ScrollView>
-                }
-                {
-                    this.state.spinner && (
-                        <ActivityIndicator
-                            animating={true}
-                            style={{
-                                height: 80,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: 8,
-                                flex: 1
-                            }}
-                            size="large"
-                        />
-                    )
+                    </ScrollView> :
+                    <ActivityIndicator
+                        animating={true}
+                        style={{
+                            height: 80,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 8,
+                            flex: 1
+                        }}
+                        size="large"
+                    />
+
                 }
             </ModalContainer>
         );
     }
-}
-
-class LoginTeam extends Component {
-
-    render() {
-        return (
-            <Modal
-                navigatorProps={{
-                    component: LoginTeam,
-                    title: LoginTeam.title,
-                    onRightButtonPress: LoginTeam.rightBtnClick,
-                    rightButtonTitle: LoginTeam.rightButtonTitle
-                }}
-            />
-        );
-    }
-
 }
 
 export default LoginTeam;

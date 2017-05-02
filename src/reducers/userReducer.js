@@ -6,7 +6,9 @@ const defaultState = {
     },
     user: {
         username: '',
-        email: ''
+        email: '',
+        role: '',
+        id: ''
     }
 };
 
@@ -18,8 +20,11 @@ export default (_state=defaultState, action) => {
                 state = action.data;
             }
             break;
+        case 'USER_SET':
+            state = action.data;
+            break;
         case 'USER_LOGOUT':
-            setCredentials();
+            setCredentials('');
             state = defaultState;
             break;
     }

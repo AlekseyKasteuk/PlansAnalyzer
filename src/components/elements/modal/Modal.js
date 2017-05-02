@@ -4,7 +4,8 @@ import {
     Text,
     View,
     NavigatorIOS,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 
@@ -28,7 +29,7 @@ class Modal extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, width: Dimensions.get('window').width, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={styles.modal}>
                     <NavigatorIOS
                         initialRoute={this.props.navigatorProps}

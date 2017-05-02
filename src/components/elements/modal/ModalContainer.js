@@ -9,7 +9,8 @@ import {
 
 const styles = StyleSheet.create({
     modalContainer: {
-        flex: 1
+        flex: 1,
+        paddingTop: 30
     },
     modalContainerContent: {
         flex: 1

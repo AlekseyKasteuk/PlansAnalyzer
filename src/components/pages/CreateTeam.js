@@ -76,8 +76,12 @@ class CreateTeamPopup extends FormWrapper {
             <ModalContainer
             >
                 {
-                    !this.state.spinner &&
-                    <ScrollView keyboardShouldPersistTaps="always" style={{paddingLeft:10,paddingRight:10}}>
+                    !this.state.spinner ?
+                    <ScrollView
+                        keyboardShouldPersistTaps="always"
+                        style={{paddingLeft:10,paddingRight:10}}
+                        automaticallyAdjustContentInsets={false}
+                    >
                         <Form
                             ref={ this.formName }
                             onFocus={this.handleFormFocus.bind(this)}
@@ -170,22 +174,18 @@ class CreateTeamPopup extends FormWrapper {
                                 }
                             />
                         </Form>
-                    </ScrollView>
-                }
-                {
-                    this.state.spinner && (
-                        <ActivityIndicator
-                            animating={true}
-                            style={{
-                                height: 80,
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: 8,
-                                flex: 1
-                            }}
-                            size="large"
-                        />
-                    )
+                    </ScrollView> :
+                    <ActivityIndicator
+                        animating={true}
+                        style={{
+                            height: 80,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 8,
+                            flex: 1
+                        }}
+                        size="large"
+                    />
                 }
             </ModalContainer>
         );
@@ -201,7 +201,9 @@ class CreateTeam extends Component {
                     component: CreateTeamPopup,
                     title: CreateTeamPopup.title,
                     onRightButtonPress: CreateTeamPopup.rightBtnClick,
-                    rightButtonTitle: CreateTeamPopup.rightButtonTitle
+                    rightButtonTitle: CreateTeamPopup.rightButtonTitle,
+                    onLeftButtonPress: () => { Actions.dismiss(); },
+                    leftButtonTitle: 'Close'
                 }}
             />
         );

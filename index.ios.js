@@ -25,6 +25,23 @@ const store = AppStorage.getStore();
 
 export default class PlansAnalyzer extends Component {
 
+    getRoutes () {
+        let routes = [];
+        for (let key in AppRouter) {
+            if (AppRouter.hasOwnProperty(key)) {
+                const route = AppRouter[key];
+                routes.push({
+                    name: key,
+                    component: route.page,
+                    type: route.type ? route.type : 'push',
+                    schema: route.schema ? route.schema : 'default',
+                    initial: !!route.initial
+                });
+            }
+        }
+        return routes;
+    }
+
     render() {
         return (
             <View style={ styles.container }>
@@ -33,12 +50,23 @@ export default class PlansAnalyzer extends Component {
                     <Router>
                         <Schema name="default" sceneConfig={ Animations.FlatFloatFromRight }/>
                         <Schema name="modal" sceneConfig={ Animations.FlatFloatFromBottom}/>
+                        <Schema name="reset" sceneConfig={ Animations.FlatFloatFromBottom}/>
                         <Schema name="popup"/>
 
-                        <Route name="loading" component={ AppRouter.loading.page } initial={ true }/>
-                        <Route name="auth" component={ AppRouter.auth.page }/>
-                        <Route name="createTeam" component={ AppRouter.createTeam.page } schema="popup"/>
-                        <Route name="sites" component={ AppRouter.sites.page }/>
+                        {
+                            this.getRoutes().map((route, index) => {
+                                return (
+                                    <Route
+                                        key={ index }
+                                        name={ route.name }
+                                        component={ route.component }
+                                        initial={ route.initial }
+                                        type={ route.type }
+                                        schema={ route.schema }
+                                    />
+                                );
+                            })
+                        }
 
                     </Router>
                 </Provider>

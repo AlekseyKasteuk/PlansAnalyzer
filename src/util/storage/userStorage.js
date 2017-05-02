@@ -23,7 +23,7 @@ module.exports.setCredentials = (token) => {
     if (typeof token !== 'string' && token) {
         return false
     }
-    AsyncStorage.setItem('token', JSON.stringify(token), (err) => {
+    AsyncStorage.setItem('token', token, (err) => {
         if (err) {
             console.error(err);
         } else {
