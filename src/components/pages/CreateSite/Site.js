@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import FormHelpIcon from '../../elements/FormHelpIcon';
 import requestSender from '../../../util/send-request';
 import { Actions } from 'react-native-redux-router';
+import { addSite } from '../../../actions/sitesActions';
+import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
 
@@ -48,6 +50,8 @@ class Site extends FormWrapper {
             this.setState({ spinner: true });
             requestSender('SITE_CREATE', request).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
+                    console.log(response);
+                    this.props.dispatch(addSite(response.data));
                     Actions.dismiss();
                 } else {
                     this.setState({ spinner: false });
@@ -94,7 +98,7 @@ class Site extends FormWrapper {
                                     }
                                     validationFunction={(value) => {
                                         return (!value && 'Required') ||
-                                            (!(/^[a-zA-Z0-9][a-zA-Z0-9\. ]{0,79}$/.test(value)) && 'Invalid value') ||
+                                            (!(/^[a-zA-Z0-9][a-zA-Z0-9\. ]{0,45}$/.test(value)) && 'Invalid value') ||
                                             true;
                                     }}
                                     iconRight={
@@ -187,4 +191,4 @@ class Site extends FormWrapper {
     }
 }
 
-export default Site;
+export default connect(() => { return {}; })(Site);

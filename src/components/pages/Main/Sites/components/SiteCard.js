@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import configs from '../../../../../config';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 const styles = StyleSheet.create({
     wrapper: {
         flexDirection: 'row',
@@ -37,6 +38,19 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         color: '#999',
         fontStyle: 'italic'
+    },
+    selectedSite: {
+        backgroundColor: '#f0f0f0'
+    },
+    filesCounterWrapper: {
+        flexDirection: 'row'
+    },
+    filesCounterIcon: {
+        color: 'red'
+    },
+    filesCounterCount: {
+        color: 'red',
+        fontSize: 12
     }
 });
 
@@ -44,8 +58,8 @@ class SiteCard extends Component {
 
     render() {
         return (
-            <TouchableWithoutFeedback onPress={ () => { console.log(this.props.site); } }>
-                <View style={ [styles.wrapper, this.props.style] }>
+            <TouchableWithoutFeedback onPress={ this.props.onPress }>
+                <View style={ [styles.wrapper, this.props.style, this.props.selected && styles.selectedSite] }>
                     <Image
                         source={{ uri:  configs.server.url + this.props.site.image }}
                         style={ styles.previewImage }
@@ -63,6 +77,10 @@ class SiteCard extends Component {
                         >
                             { this.props.site.address_country + ', ' +  this.props.site.address_city + ', ' + this.props.site.address_street + ' ' + this.props.site.address_number }
                         </Text>
+                    </View>
+                    <View style={ styles.filesCounterWrapper }>
+                        <Icon name="description" size={13} style={ styles.filesCounterIcon }/>
+                        <Text style={ styles.filesCounterCount }>{ this.props.site.files_count }</Text>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

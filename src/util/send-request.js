@@ -14,16 +14,28 @@ const requests = {
     AUTH_CHECK: requestObject('GET', '/user/check'),
     USER_LOGIN: requestObject('POST', '/user/login'),
     SITES_LIST: requestObject('GET', '/sites'),
-    SITE_CREATE: requestObject('POST', '/site')
+    SITE_CREATE: requestObject('POST', '/site'),
+    SITE_DIRECTORY: requestObject('GET', '/directory'),
+    SITE_DIRECTORY_CREATE: requestObject('POST', '/directory')
 };
 
 export default (type, data) => {
-    const request = requests[type];
-    if (!request) {
+    if (!requests[type]) {
         return new Promise((resolve, reject) => { reject('UNKNOWN REQUEST NAME') });
     }
-    return new Promise((resolve, reject) => {
+    const request = Object.assign({}, requests[type]);
+    return new Promise((resolve) => {
         getCredentials().then((token) => {
+            if ((request.method === 'GET' || request.method === 'DELETE') && data) {
+                let params = [];
+                for (let key in data) {
+                    if (data.hasOwnProperty(key) && data[key]) {
+                        params.push(key + '=' + data[key]);
+                    }
+                }
+                request.url += '?' + params.join('&');
+                data = undefined;
+            }
             fetch(request.url, {
                 method: request.method,
                 headers: {

@@ -4,6 +4,8 @@ import CreateTeam from '../components/pages/CreateTeam';
 import LoadingPage from '../components/pages/LoadingPage';
 import Login from '../components/pages/Login';
 import CreateSite from '../components/pages/CreateSite';
+import Directory from '../components/pages/DirectoryPage';
+import CreateDirectory from '../components/pages/CreateDirectory';
 
 const routes = {
     auth: {
@@ -28,6 +30,13 @@ const routes = {
     },
     createSite: {
         page: CreateSite,
+        schema: 'popup'
+    },
+    directory: {
+        page: Directory
+    },
+    createDirectory: {
+        page: CreateDirectory,
         schema: 'popup'
     }
 };

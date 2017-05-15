@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import Account from './Account';
 import Sites from './Sites';
+import SelectedSite from './SelectedSite';
 
 const defaultPageStyles = require('../../../styles/default-page');
 const styles = StyleSheet.create({
@@ -72,6 +73,7 @@ class Main extends Component {
                             </TabBarIOS.Item>
                         </TabBarIOS>
                     </View>
+                    <SelectedSite />
                     <MapView
                         style={ styles.mapView }
                         showsUserLocation={true}
